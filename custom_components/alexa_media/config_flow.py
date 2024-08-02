@@ -29,7 +29,12 @@ from alexapy import (
 from homeassistant import config_entries
 from homeassistant.components.http.view import HomeAssistantView
 from homeassistant.const import CONF_EMAIL, CONF_PASSWORD, CONF_SCAN_INTERVAL, CONF_URL
-from homeassistant.core import callback
+
+# 02.08.2024
+from homeassistant.core import (
+    callback,
+    HomeAssistant,
+)
 from homeassistant.data_entry_flow import FlowResult, UnknownFlow
 from homeassistant.exceptions import Unauthorized
 from homeassistant.helpers import config_validation as cv
@@ -72,15 +77,15 @@ _LOGGER = logging.getLogger(__name__)
 
 CONFIG_VERSION = 1
 
-
+# 02.08.2024
 @callback
-def configured_instances(hass):
+def configured_instances(hass: HomeAssistant):
     """Return a set of configured Alexa Media instances."""
     return {entry.title for entry in hass.config_entries.async_entries(DOMAIN)}
 
-
+# 02.08.2024
 @callback
-def in_progess_instances(hass):
+def in_progess_instances(hass: HomeAssistant):
     """Return a set of in progress Alexa Media flows."""
     return {entry["flow_id"] for entry in hass.config_entries.flow.async_progress()}
 
