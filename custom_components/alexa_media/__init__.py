@@ -38,7 +38,10 @@ from homeassistant.const import (
     EVENT_HOMEASSISTANT_STARTED,
     EVENT_HOMEASSISTANT_STOP,
 )
-from homeassistant.core import callback
+from homeassistant.core import (
+    callback,
+    HomeAssistant,
+)
 from homeassistant.data_entry_flow import UnknownFlow
 from homeassistant.exceptions import ConfigEntryNotReady
 from homeassistant.helpers import config_validation as cv, device_registry as dr
@@ -1392,6 +1395,7 @@ async def test_login_status(hass, config_entry, login) -> bool:
         message += f"Relogin required after {elaspsed_time} and {api_calls} api calls."
     # hass.components.persistent_notification.async_create(
     async_create(
+        hass,
         title="Alexa Media Reauthentication Required",
         message=message,
         notification_id=f"alexa_media_{slugify(login.email)}{slugify(login.url[7:])}",
